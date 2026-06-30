@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DuckPilot - The Ultimate Developer Workflow Manager</title>
+    <meta name="description" content="Streamline your local projects, integrate deeply with WSL, and scaffold apps instantly from one unified dashboard.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config & Custom Styles -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0ea5e9',
+                        secondary: '#8b5cf6',
+                        dark: '#0f172a',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-gradient {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+            }
+            .glass-card {
+                @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl;
+            }
+            .glass-nav {
+                @apply bg-slate-950/70 backdrop-blur-md border-b border-white/10;
+            }
+        }
+        
+        body {
+            @apply bg-slate-950 text-slate-300 antialiased selection:bg-primary selection:text-white;
+            overflow-x: hidden;
+        }
+
+        /* Subtle background glow */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Ambient Background Glows -->
+    <div class="bg-glow top-[-200px] left-[-100px]"></div>
+    <div class="bg-glow top-[40%] right-[-200px] bg-gradient-to-r from-purple-500/10 to-transparent"></div>
+
+    <!-- A. Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer">
+                    <img src="assets/logo.png" alt="DuckPilot Logo" class="w-10 h-10 object-contain">
+                    <span class="font-display font-bold text-2xl text-white tracking-tight">DuckPilot</span>
+                </div>
+
+                <!-- Desktop Links -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#features" class="text-sm font-medium hover:text-white transition-colors duration-200">Features</a>
+                    <a href="#how-it-works" class="text-sm font-medium hover:text-white transition-colors duration-200">How it Works</a>
+                    <a href="https://github.com/jonreygalera/duckpilot-program" target="_blank" class="text-sm font-medium hover:text-white transition-colors duration-200 flex items-center gap-1">
+                        <i class="ph ph-github-logo text-lg"></i> GitHub
+                    </a>
+                    <a href="https://github.com/jonreygalera/duckpilot-program/raw/main/installer/DuckPilotSetup.exe" target="_blank" class="group relative px-6 py-2.5 font-semibold text-white rounded-full bg-white/10 hover:bg-white/20 border border-white/10 transition-all duration-300 overflow-hidden">
+                        <div class="absolute inset-0 w-0 bg-gradient-to-r from-primary to-secondary transition-all duration-[250ms] ease-out group-hover:w-full -z-10"></div>
+                        Download Latest
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- B. Hero Section -->
+    <section class="pt-40 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center text-center relative">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 text-sm font-medium text-primary border-primary/20 animate-fade-in-up">
+            <span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+            Now in Beta for Windows
+        </div>
+
+        <h1 class="font-display text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight mb-6 max-w-4xl">
+            The Ultimate <br class="hidden md:block" />
+            <span class="text-gradient">Developer Workflow</span> Manager
+        </h1>
+        
+        <p class="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed">
+            Streamline your local projects, integrate deeply with WSL, and scaffold apps instantly from one unified dashboard.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 mb-20">
+            <a href="https://github.com/jonreygalera/duckpilot-program/raw/main/installer/DuckPilotSetup.exe" target="_blank" class="px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-lg shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                <i class="ph-bold ph-windows-logo"></i> Download for Windows
+            </a>
+            <a href="#what-is-duckpilot" class="px-8 py-4 rounded-xl glass-card text-white font-semibold text-lg hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                View Documentation <i class="ph-bold ph-arrow-right"></i>
+            </a>
+        </div>
+
+        <!-- Visual Mockup -->
+        <div class="relative w-full max-w-5xl mx-auto animate-float">
+            <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur opacity-30"></div>
+            <div class="relative rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden aspect-video flex items-center justify-center">
+                <img src="assets/image.png" alt="DuckPilot Dashboard" class="w-full h-full object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- C. What is DuckPilot? -->
+    <section id="what-is-duckpilot" class="py-24 relative z-10 border-t border-white/5 bg-slate-950/50">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">What is DuckPilot?</h2>
+            <p class="text-xl text-slate-400 leading-relaxed">
+                A comprehensive Windows desktop application built with Flutter, designed to mitigate the friction of modern local development. It's your command center for everything code.
+            </p>
+        </div>
+    </section>
+
+    <!-- D. Why Use DuckPilot? -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">Why Use DuckPilot?</h2>
+            <p class="text-slate-400 text-lg">Built for developers of all skill levels.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Beginner Card -->
+            <div class="glass-card p-8 hover:border-primary/30 transition-colors duration-300 group">
+                <div class="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="ph-fill ph-student text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 font-display">For Beginners</h3>
+                <p class="text-slate-400 leading-relaxed">
+                    Stop juggling terminals. DuckPilot puts your code, templates, and server commands into one beautiful window. No more typing long paths or forgetting startup commands.
+                </p>
+            </div>
+
+            <!-- Advanced Card -->
+            <div class="glass-card p-8 hover:border-secondary/30 transition-colors duration-300 group">
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="ph-fill ph-terminal-window text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4 font-display">For Advanced Users</h3>
+                <p class="text-slate-400 leading-relaxed">
+                    Mitigate context-switching. Centralize your WSL 2 operations, automate boilerplate with Backstage-style YAML templates, and inject secure sudo auth natively.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- E. Key Benefits (Feature Grid) -->
+    <section id="features" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
+        <div class="bg-glow top-[20%] left-[-20%] bg-gradient-to-r from-primary/10 to-transparent"></div>
+        
+        <div class="text-center mb-16">
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">Supercharge Your Workflow</h2>
+            <p class="text-slate-400 text-lg">Everything you need, right where you need it.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="glass-card p-6 hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-primary mb-4"><i class="ph-duotone ph-squares-four text-4xl"></i></div>
+                <h4 class="text-xl font-bold text-white mb-2">Unified Dashboard</h4>
+                <p class="text-sm text-slate-400">Manage all your projects, configurations, and environments in one centralized, beautiful interface.</p>
+            </div>
+
+            <div class="glass-card p-6 hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-secondary mb-4"><i class="ph-duotone ph-linux-logo text-4xl"></i></div>
+                <h4 class="text-xl font-bold text-white mb-2">Deep WSL Integration</h4>
+                <p class="text-sm text-slate-400">Execute Linux commands directly from Windows. Seamlessly bridge the gap between your OS and dev environment.</p>
+            </div>
+
+            <div class="glass-card p-6 hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-pink-500 mb-4"><i class="ph-duotone ph-magic-wand text-4xl"></i></div>
+                <h4 class="text-xl font-bold text-white mb-2">Dynamic Scaffolding</h4>
+                <p class="text-sm text-slate-400">Generate multi-tiered architectures instantly using advanced, parameter-aware YAML templates.</p>
+            </div>
+
+            <div class="glass-card p-6 hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-emerald-500 mb-4"><i class="ph-duotone ph-git-branch text-4xl"></i></div>
+                <h4 class="text-xl font-bold text-white mb-2">Git Clone Manager</h4>
+                <p class="text-sm text-slate-400">Seamless repository importing with real-time audit logs and advanced Git argument support.</p>
+            </div>
+
+            <div class="glass-card p-6 hover:-translate-y-2 transition-transform duration-300 lg:col-span-2">
+                <div class="text-amber-500 mb-4"><i class="ph-duotone ph-cpu text-4xl"></i></div>
+                <h4 class="text-xl font-bold text-white mb-2">Resource Efficient</h4>
+                <p class="text-sm text-slate-400 max-w-xl">Built with Flutter for native Windows performance. Single-instance locking ensures a low memory footprint while you work on demanding tasks.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- F. How It Works -->
+    <section id="how-it-works" class="py-24 bg-slate-900 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">How It Works</h2>
+                <p class="text-slate-400 text-lg">From zero to coding in seconds.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 relative">
+                <!-- Connecting Line for Desktop -->
+                <div class="hidden md:block absolute top-12 left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 z-0"></div>
+
+                <!-- Step 1 -->
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-24 h-24 rounded-full glass-card bg-slate-950 flex items-center justify-center text-3xl font-display font-bold text-primary mb-6 shadow-[0_0_30px_rgba(14,165,233,0.2)]">
+                        1
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Launch</h4>
+                    <p class="text-slate-400">Open DuckPilot and set your default WSL path in the settings.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-24 h-24 rounded-full glass-card bg-slate-950 flex items-center justify-center text-3xl font-display font-bold text-secondary mb-6 shadow-[0_0_30px_rgba(139,92,246,0.2)]">
+                        2
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Scaffold or Import</h4>
+                    <p class="text-slate-400">Choose a boilerplate template or clone a remote Git repository securely.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-24 h-24 rounded-full glass-card bg-slate-950 flex items-center justify-center text-3xl font-display font-bold text-white mb-6 shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                        <i class="ph-fill ph-code"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-3">Code</h4>
+                    <p class="text-slate-400">Instantly open a WSL terminal bound to your project and start building.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Bottom -->
+    <section class="py-24 px-4 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 pointer-events-none"></div>
+        <h2 class="font-display text-4xl font-bold text-white mb-6 relative z-10">Ready to take flight?</h2>
+        <p class="text-xl text-slate-400 mb-10 relative z-10">Join the beta and transform your Windows development experience.</p>
+        <a href="https://github.com/jonreygalera/duckpilot-program/raw/main/installer/DuckPilotSetup.exe" target="_blank" class="inline-flex relative z-10 px-10 py-5 rounded-full bg-white text-slate-950 font-bold text-lg shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] hover:scale-105 transition-all duration-300">
+            Download DuckPilot Now
+        </a>
+    </section>
+
+    <!-- G. Footer -->
+    <footer class="border-t border-white/10 bg-slate-950 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12">
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="assets/logo.png" alt="DuckPilot Logo" class="w-8 h-8 object-contain">
+                        <span class="font-display font-bold text-xl text-white">DuckPilot</span>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-xs text-center md:text-left">
+                        The ultimate developer workflow manager for Windows and WSL.
+                    </p>
+                </div>
+                
+                <div class="flex gap-12 text-center md:text-left">
+                    <div class="flex flex-col gap-3">
+                        <h5 class="text-white font-semibold mb-1">Product</h5>
+                        <a href="https://github.com/jonreygalera/duckpilot-program/releases" target="_blank" class="text-slate-400 hover:text-white transition-colors text-sm">Releases</a>
+                        <a href="#features" class="text-slate-400 hover:text-white transition-colors text-sm">Features</a>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <h5 class="text-white font-semibold mb-1">Community</h5>
+                        <a href="https://github.com/jonreygalera/duckpilot-program" target="_blank" class="text-slate-400 hover:text-white transition-colors text-sm">GitHub Repo</a>
+                        <a href="https://github.com/jonreygalera/duckpilot-program/issues" target="_blank" class="text-slate-400 hover:text-white transition-colors text-sm">Issues</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+                <p>&copy; 2026 DuckPilot. All rights reserved.</p>
+                <p>Designed & Developed by <a href="https://github.com/jonreygalera" class="text-primary hover:text-white transition-colors">Jon Rey Galera</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Simple Scroll Script for Navbar -->
+    <script>
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-lg');
+                nav.classList.replace('bg-slate-950/70', 'bg-slate-950/90');
+            } else {
+                nav.classList.remove('shadow-lg');
+                nav.classList.replace('bg-slate-950/90', 'bg-slate-950/70');
+            }
+        });
+    </script>
+</body>
+</html>
